@@ -1,6 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Trophy, Star, Shield, Heart } from "lucide-react";
+import { Trophy, Star, Shield, Heart, Award, Activity } from "lucide-react";
 
 const leadership = [
   { title: "Volleyball Player", desc: "National & School level", icon: Trophy },
@@ -27,54 +27,68 @@ const ActivitiesSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section className="py-24 relative" ref={ref}>
+    <section id="activities" className="section-padding relative" ref={ref}>
       <div className="container mx-auto px-6">
-        <div className="max-w-4xl mx-auto">
-          <motion.h2
+        <div className="max-w-5xl mx-auto">
+          <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
-            className="text-4xl md:text-5xl font-heading font-bold mb-12 line-accent"
+            className="mb-14"
           >
-            Leadership & <span className="text-gradient-gold">Activities</span>
-          </motion.h2>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-alt tracking-[0.2em] uppercase mb-6">
+              <Activity size={12} />
+              Activities
+            </div>
+            <h2 className="text-4xl md:text-5xl font-heading font-bold">
+              Leadership & <span className="text-gradient-gold">Activities</span>
+            </h2>
+          </motion.div>
 
           {/* Leadership cards */}
-          <div className="grid sm:grid-cols-2 gap-5 mb-16">
+          <div className="grid sm:grid-cols-2 gap-4 mb-16">
             {leadership.map((item, i) => (
               <motion.div
                 key={item.title}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.5, delay: 0.15 * i }}
-                whileHover={{ y: -6 }}
-                className="glass-card rounded-xl p-6 flex items-start gap-4 cursor-default"
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.12 * i }}
+                className="glass-card-hover rounded-2xl p-6 flex items-start gap-4 cursor-default group"
               >
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-all duration-300">
                   <item.icon size={20} className="text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-heading font-semibold text-foreground">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground font-body">{item.desc}</p>
+                  <h3 className="font-alt text-sm font-semibold text-foreground group-hover:text-primary transition-colors">{item.title}</h3>
+                  <p className="text-xs text-muted-foreground font-body mt-1">{item.desc}</p>
                 </div>
               </motion.div>
             ))}
           </div>
 
-          {/* Volunteering & Achievements side by side */}
-          <div className="grid md:grid-cols-2 gap-8">
+          {/* Volunteering & Achievements */}
+          <div className="grid md:grid-cols-2 gap-10">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.5 }}
             >
-              <h3 className="text-xl font-heading font-semibold mb-5 text-foreground">Volunteering</h3>
+              <h3 className="text-xl font-heading font-semibold mb-6 text-foreground flex items-center gap-2">
+                <div className="w-1 h-6 rounded-full bg-primary" />
+                Volunteering
+              </h3>
               <div className="space-y-3">
                 {volunteering.map((v, i) => (
-                  <div key={i} className="flex items-center gap-3 text-sm text-muted-foreground font-body">
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={isInView ? { opacity: 1, x: 0 } : {}}
+                    transition={{ delay: 0.6 + i * 0.08 }}
+                    className="flex items-center gap-3 text-sm text-muted-foreground font-body py-2 px-3 rounded-lg hover:bg-secondary/30 transition-colors"
+                  >
                     <div className="w-2 h-2 rounded-full bg-primary shrink-0" />
                     {v}
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
@@ -84,13 +98,22 @@ const ActivitiesSection = () => {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.6 }}
             >
-              <h3 className="text-xl font-heading font-semibold mb-5 text-foreground">Achievements</h3>
+              <h3 className="text-xl font-heading font-semibold mb-6 text-foreground flex items-center gap-2">
+                <div className="w-1 h-6 rounded-full bg-primary" />
+                Achievements
+              </h3>
               <div className="space-y-3">
                 {achievements.map((a, i) => (
-                  <div key={i} className="flex items-center gap-3 text-sm text-muted-foreground font-body">
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={isInView ? { opacity: 1, x: 0 } : {}}
+                    transition={{ delay: 0.7 + i * 0.08 }}
+                    className="flex items-center gap-3 text-sm text-muted-foreground font-body py-2 px-3 rounded-lg hover:bg-secondary/30 transition-colors"
+                  >
                     <Trophy size={14} className="text-primary shrink-0" />
                     {a}
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>

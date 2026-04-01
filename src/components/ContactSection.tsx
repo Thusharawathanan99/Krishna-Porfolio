@@ -1,6 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Mail, Phone, MapPin, Linkedin } from "lucide-react";
+import { Mail, Phone, MapPin, Linkedin, Send } from "lucide-react";
 
 const contacts = [
   { icon: Phone, label: "Phone", value: "077 4998574", href: "tel:0774998574" },
@@ -19,19 +19,25 @@ const ContactSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="contact" className="py-24 relative" ref={ref}>
+    <section id="contact" className="section-padding relative" ref={ref}>
       <div className="container mx-auto px-6">
-        <div className="max-w-4xl mx-auto">
-          <motion.h2
+        <div className="max-w-5xl mx-auto">
+          <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
-            className="text-4xl md:text-5xl font-heading font-bold mb-12 line-accent"
+            className="mb-14"
           >
-            Get In <span className="text-gradient-gold">Touch</span>
-          </motion.h2>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-alt tracking-[0.2em] uppercase mb-6">
+              <Send size={12} />
+              Contact
+            </div>
+            <h2 className="text-4xl md:text-5xl font-heading font-bold">
+              Get In <span className="text-gradient-gold">Touch</span>
+            </h2>
+          </motion.div>
 
-          <div className="grid sm:grid-cols-2 gap-5 mb-16">
+          <div className="grid sm:grid-cols-2 gap-4 mb-16">
             {contacts.map((c, i) => (
               <motion.a
                 key={c.label}
@@ -40,16 +46,15 @@ const ContactSection = () => {
                 rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.15 * i }}
-                whileHover={{ y: -4, scale: 1.02 }}
-                className="glass-card rounded-xl p-6 flex items-center gap-4 group"
+                transition={{ duration: 0.5, delay: 0.12 * i }}
+                className="glass-card-hover rounded-2xl p-6 flex items-center gap-4 group"
               >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all duration-300">
                   <c.icon size={22} className="text-primary" />
                 </div>
-                <div>
-                  <p className="text-xs text-muted-foreground font-body uppercase tracking-wider">{c.label}</p>
-                  <p className="text-sm text-foreground font-body mt-1">{c.value}</p>
+                <div className="min-w-0">
+                  <p className="text-[10px] text-muted-foreground font-alt uppercase tracking-[0.2em]">{c.label}</p>
+                  <p className="text-sm text-foreground font-alt mt-1 truncate group-hover:text-primary transition-colors">{c.value}</p>
                 </div>
               </motion.a>
             ))}
@@ -59,15 +64,24 @@ const ContactSection = () => {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.6 }}
+            transition={{ duration: 0.7, delay: 0.5 }}
           >
-            <h3 className="text-2xl font-heading font-semibold mb-6 text-foreground">References</h3>
-            <div className="grid sm:grid-cols-2 gap-5">
+            <h3 className="text-2xl font-heading font-semibold mb-6 text-foreground flex items-center gap-2">
+              <div className="w-1 h-6 rounded-full bg-primary" />
+              References
+            </h3>
+            <div className="grid sm:grid-cols-2 gap-4">
               {references.map((r, i) => (
-                <div key={i} className="glass-card rounded-xl p-6">
-                  <p className="font-heading font-semibold text-foreground">{r.name}</p>
-                  <p className="text-sm text-muted-foreground font-body mt-1">{r.role}</p>
-                </div>
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ delay: 0.6 + i * 0.1 }}
+                  className="glass-card-hover rounded-2xl p-6"
+                >
+                  <p className="font-alt font-semibold text-foreground text-sm">{r.name}</p>
+                  <p className="text-xs text-muted-foreground font-body mt-1">{r.role}</p>
+                </motion.div>
               ))}
             </div>
           </motion.div>
@@ -75,11 +89,16 @@ const ContactSection = () => {
       </div>
 
       {/* Footer */}
-      <div className="mt-24 border-t border-border pt-8">
-        <p className="text-center text-sm text-muted-foreground font-body">
-          © 2025 Idhayaraja Krishna Kumar. All rights reserved.
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={isInView ? { opacity: 1 } : {}}
+        transition={{ delay: 0.8 }}
+        className="mt-28 border-t border-border pt-8"
+      >
+        <p className="text-center text-xs text-muted-foreground font-alt tracking-wider">
+          © 2025 Idhayaraja Krishna Kumar · All rights reserved
         </p>
-      </div>
+      </motion.div>
     </section>
   );
 };
