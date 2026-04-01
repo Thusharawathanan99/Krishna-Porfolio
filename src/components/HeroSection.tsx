@@ -1,8 +1,12 @@
 import { motion } from "framer-motion";
-import { ArrowDown, Linkedin, Mail, Phone, MapPin, Download } from "lucide-react";
+import { ArrowDown, Linkedin, Mail, Phone, MapPin } from "lucide-react";
 import profilePhoto from "@/assets/profile-photo.jpeg";
 
-const HeroSection = () => {
+interface HeroProps {
+  content: Record<string, string>;
+}
+
+const HeroSection = ({ content }: HeroProps) => {
   return (
     <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
       {/* Animated background orbs */}
@@ -41,7 +45,7 @@ const HeroSection = () => {
             >
               <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-alt tracking-[0.2em] uppercase">
                 <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                HR Professional
+                {content.hero_tagline}
               </span>
             </motion.div>
 
@@ -59,7 +63,7 @@ const HeroSection = () => {
               transition={{ duration: 0.8, delay: 0.25 }}
               className="text-5xl md:text-6xl lg:text-7xl font-heading font-bold mb-2 leading-[1.1]"
             >
-              <span className="text-foreground">Idhayaraja</span>
+              <span className="text-foreground">{content.hero_name_first}</span>
             </motion.h1>
 
             <motion.h1
@@ -68,7 +72,7 @@ const HeroSection = () => {
               transition={{ duration: 0.8, delay: 0.35 }}
               className="text-5xl md:text-6xl lg:text-7xl font-heading font-bold mb-6 leading-[1.1]"
             >
-              <span className="text-gradient-gold text-shadow-glow">Krishna Kumar</span>
+              <span className="text-gradient-gold text-shadow-glow">{content.hero_name_last}</span>
             </motion.h1>
 
             <motion.p
@@ -77,8 +81,7 @@ const HeroSection = () => {
               transition={{ duration: 0.8, delay: 0.45 }}
               className="text-base md:text-lg text-muted-foreground font-body max-w-lg mb-8 leading-relaxed"
             >
-              BSc Human Resources Management undergraduate passionate about employee engagement, 
-              recruitment, and building strong organizational culture.
+              {content.hero_description}
             </motion.p>
 
             {/* Stats */}
@@ -114,9 +117,9 @@ const HeroSection = () => {
               className="flex flex-wrap items-center gap-3"
             >
               {[
-                { icon: Phone, text: "077 4998574", href: "tel:0774998574" },
-                { icon: Mail, text: "illayarajahk@gmail.com", href: "mailto:illayarajahk@gmail.com" },
-                { icon: MapPin, text: "Lunugala", href: "#contact" },
+                { icon: Phone, text: content.phone, href: `tel:${content.phone?.replace(/\s/g, '')}` },
+                { icon: Mail, text: content.email, href: `mailto:${content.email}` },
+                { icon: MapPin, text: content.location, href: "#contact" },
               ].map((item, i) => (
                 <motion.a
                   key={i}
@@ -130,7 +133,7 @@ const HeroSection = () => {
                 </motion.a>
               ))}
               <motion.a
-                href="https://linkedin.com/in/illayarajahkrishnak"
+                href={content.linkedin_url}
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05, y: -2 }}
@@ -151,7 +154,6 @@ const HeroSection = () => {
             className="order-1 lg:order-2 flex justify-center lg:justify-end"
           >
             <div className="relative">
-              {/* Decorative ring */}
               <motion.div
                 className="absolute -inset-4 rounded-full border border-primary/20"
                 animate={{ rotate: 360 }}
@@ -162,22 +164,16 @@ const HeroSection = () => {
                 animate={{ rotate: -360 }}
                 transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
               />
-              
-              {/* Glow behind photo */}
               <div className="absolute inset-0 rounded-full bg-primary/10 blur-[60px] scale-110" />
-
-              {/* Photo */}
               <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden photo-glow border-2 border-primary/20">
                 <img
                   src={profilePhoto}
-                  alt="Idhayaraja Krishna Kumar"
+                  alt={`${content.hero_name_first} ${content.hero_name_last}`}
                   className="w-full h-full object-cover"
                 />
-                {/* Overlay gradient */}
                 <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
               </div>
 
-              {/* Floating badges */}
               <motion.div
                 animate={{ y: [-8, 8, -8] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -208,10 +204,7 @@ const HeroSection = () => {
           className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
         >
           <span className="text-[10px] tracking-[0.3em] uppercase font-alt">Scroll</span>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
+          <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity }}>
             <ArrowDown size={16} />
           </motion.div>
         </motion.a>

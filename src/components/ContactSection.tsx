@@ -2,21 +2,25 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Mail, Phone, MapPin, Linkedin, Send } from "lucide-react";
 
-const contacts = [
-  { icon: Phone, label: "Phone", value: "077 4998574", href: "tel:0774998574" },
-  { icon: Mail, label: "Email", value: "illayarajahk@gmail.com", href: "mailto:illayarajahk@gmail.com" },
-  { icon: MapPin, label: "Location", value: "Lunugala", href: "#" },
-  { icon: Linkedin, label: "LinkedIn", value: "linkedin.com/in/illayarajahkrishnak", href: "https://linkedin.com/in/illayarajahkrishnak" },
-];
-
 const references = [
   { name: "Mr. Chrishankar Janathanan", role: "Senior Lecturer" },
   { name: "Mr. Terence Kahapola Arachchi", role: "Dean" },
 ];
 
-const ContactSection = () => {
+interface ContactProps {
+  content: Record<string, string>;
+}
+
+const ContactSection = ({ content }: ContactProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  const contacts = [
+    { icon: Phone, label: "Phone", value: content.phone, href: `tel:${content.phone?.replace(/\s/g, '')}` },
+    { icon: Mail, label: "Email", value: content.email, href: `mailto:${content.email}` },
+    { icon: MapPin, label: "Location", value: content.location, href: "#" },
+    { icon: Linkedin, label: "LinkedIn", value: "linkedin.com/in/illayarajahkrishnak", href: content.linkedin_url },
+  ];
 
   return (
     <section id="contact" className="section-padding relative" ref={ref}>
@@ -96,7 +100,7 @@ const ContactSection = () => {
         className="mt-28 border-t border-border pt-8"
       >
         <p className="text-center text-xs text-muted-foreground font-alt tracking-wider">
-          © 2025 Idhayaraja Krishna Kumar · All rights reserved
+          © 2025 {content.hero_name_first} {content.hero_name_last} · All rights reserved
         </p>
       </motion.div>
     </section>
