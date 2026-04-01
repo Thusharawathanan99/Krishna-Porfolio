@@ -2,11 +2,22 @@ import { motion } from "framer-motion";
 import { ArrowDown, Linkedin, Mail, Phone, MapPin } from "lucide-react";
 import profilePhoto from "@/assets/profile-photo.jpeg";
 
+const defaultContent: Record<string, string> = {
+  hero_name_first: "Idhayaraja",
+  hero_name_last: "Krishna Kumar",
+  hero_tagline: "HR Professional",
+  hero_description: "BSc Human Resources Management undergraduate passionate about employee engagement, recruitment, and building strong organizational culture.",
+  phone: "077 4998574",
+  email: "illayarajahk@gmail.com",
+  location: "Lunugala",
+  linkedin_url: "https://linkedin.com/in/illayarajahkrishnak",
+};
+
 interface HeroProps {
-  content: Record<string, string>;
+  content?: Record<string, string>;
 }
 
-const HeroSection = ({ content }: HeroProps) => {
+const HeroSection = ({ content = defaultContent }: HeroProps) => {
   return (
     <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
       {/* Animated background orbs */}
