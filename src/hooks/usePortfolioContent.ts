@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
 
 const defaultContent: Record<string, string> = {
   hero_name_first: "Idhayaraja",
@@ -56,26 +55,20 @@ export function usePortfolioContent() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const load = async () => {
-      const { data } = await supabase
-        .from("portfolio_content")
-        .select("section_key, content");
-
-      if (data && data.length > 0) {
-        const merged = { ...defaultContent };
-        data.forEach((item) => {
-          merged[item.section_key] = item.content;
-        });
-        setContent(merged);
-
-        if (merged["skills_json"]) try { setSkills(JSON.parse(merged["skills_json"])); } catch {}
-        if (merged["experience_json"]) try { setExperience(JSON.parse(merged["experience_json"])); } catch {}
-        if (merged["certs_json"]) try { setCerts(JSON.parse(merged["certs_json"])); } catch {}
-        if (merged["leadership_json"]) try { setLeadership(JSON.parse(merged["leadership_json"])); } catch {}
+    try {
+      const savedData = localStorage.getItem('portfolio_data');
+      if (savedData) {
+        const parsed = JSON.parse(savedData);
+        if (parsed.content) setContent(parsed.content);
+        if (parsed.skills) setSkills(parsed.skills);
+        if (parsed.experience) setExperience(parsed.experience);
+        if (parsed.certs) setCerts(parsed.certs);
+        if (parsed.leadership) setLeadership(parsed.leadership);
       }
-      setLoading(false);
-    };
-    load();
+    } catch (e) {
+      console.error("Error loading portfolio data from LocalStorage:", e);
+    }
+    setLoading(false);
   }, []);
 
   return { content, skills, experience, certs, leadership, loading };

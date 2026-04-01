@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,35 +12,21 @@ const AdminLogin = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-
-    if (error) {
-      toast.error(error.message);
+    setTimeout(() => {
+      // Hardcoded login check
+      if (email === "admin@idhayaraja.com" && password === "password123") {
+        localStorage.setItem("admin_auth_token", "true");
+        toast.success("Welcome back, Admin!");
+        navigate("/admin/dashboard");
+      } else {
+        toast.error("Invalid credentials.");
+      }
       setLoading(false);
-      return;
-    }
-
-    // Check if user has admin role
-    const { data: roles } = await supabase
-      .from("user_roles")
-      .select("role")
-      .eq("user_id", data.user.id)
-      .eq("role", "admin");
-
-    if (!roles || roles.length === 0) {
-      toast.error("You don't have admin access");
-      await supabase.auth.signOut();
-      setLoading(false);
-      return;
-    }
-
-    toast.success("Welcome back, Admin!");
-    navigate("/admin/dashboard");
-    setLoading(false);
+    }, 800);
   };
 
   return (
@@ -60,7 +45,7 @@ const AdminLogin = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="your@email.com"
+              placeholder="admin@idhayaraja.com"
               required
               className="bg-secondary/50 border-border"
             />

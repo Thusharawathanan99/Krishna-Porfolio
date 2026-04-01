@@ -1,3 +1,3 @@
-# Welcome to your Lovable project
+# Portfolio Project
 
-TODO: Document your project here
+Portfolio project for Idhayaraja Krishna Kumar.
