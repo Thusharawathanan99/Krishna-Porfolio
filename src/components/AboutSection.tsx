@@ -8,7 +8,11 @@ const interests = [
   { icon: MessageSquare, title: "Organizational Culture", desc: "Building strong, positive and inclusive work environments" },
 ];
 
-const AboutSection = () => {
+interface AboutProps {
+  content: Record<string, string>;
+}
+
+const AboutSection = ({ content }: AboutProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -17,7 +21,6 @@ const AboutSection = () => {
       <div className="container mx-auto px-6">
         <div className="max-w-5xl mx-auto">
           <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
-            {/* Left label */}
             <motion.div
               initial={{ opacity: 0, x: -40 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -34,7 +37,6 @@ const AboutSection = () => {
               </h2>
             </motion.div>
 
-            {/* Right content */}
             <motion.div
               initial={{ opacity: 0, x: 40 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -42,10 +44,7 @@ const AboutSection = () => {
               className="lg:col-span-3"
             >
               <p className="text-muted-foreground font-body text-base leading-[1.8] mb-8">
-                I am an HR Management undergraduate with a solid foundation in human resources principles. 
-                With hands-on experience in administration, teamwork, and communication, I am driven by a 
-                passion for creating impactful employee experiences and fostering thriving organizational cultures. 
-                I bring a unique blend of academic knowledge and practical exposure to every challenge.
+                {content.about_text}
               </p>
               <div className="h-px bg-gradient-to-r from-primary/30 via-primary/10 to-transparent mb-8" />
               <div className="grid gap-4">
