@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowDown, Linkedin, Mail, Phone, MapPin, Download } from "lucide-react";
-import profilePhoto from "@/assets/profile-photo.webp";
+import profilePhoto from "@/assets/profile-photo.jpeg";
 
 const HeroSection = () => {
   return (
