@@ -106,11 +106,14 @@ const ContactSection = ({ content = defaultContent }: ContactProps) => {
         initial={{ opacity: 0 }}
         animate={isInView ? { opacity: 1 } : {}}
         transition={{ delay: 0.8 }}
-        className="mt-28 border-t border-border pt-8"
+        className="mt-28 border-t border-border pt-8 pb-8 flex flex-col sm:flex-row items-center justify-between gap-4"
       >
         <p className="text-center text-xs text-muted-foreground font-alt tracking-wider">
           © 2025 {content.hero_name_first} {content.hero_name_last} · All rights reserved
         </p>
+        <a href="#/admin" className="text-xs text-muted-foreground hover:text-primary transition-colors font-alt tracking-wider border border-transparent hover:border-primary/20 bg-secondary/20 hover:bg-secondary/50 px-3 py-1.5 rounded-full">
+          Admin Panel
+        </a>
       </motion.div>
     </section>
   );
