@@ -7,11 +7,20 @@ const references = [
   { name: "Mr. Terence Kahapola Arachchi", role: "Dean" },
 ];
 
+const defaultContent: Record<string, string> = {
+  phone: "077 4998574",
+  email: "illayarajahk@gmail.com",
+  location: "Lunugala",
+  linkedin_url: "https://linkedin.com/in/illayarajahkrishnak",
+  hero_name_first: "Idhayaraja",
+  hero_name_last: "Krishna Kumar",
+};
+
 interface ContactProps {
-  content: Record<string, string>;
+  content?: Record<string, string>;
 }
 
-const ContactSection = ({ content }: ContactProps) => {
+const ContactSection = ({ content = defaultContent }: ContactProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 

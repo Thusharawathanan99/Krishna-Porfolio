@@ -9,10 +9,10 @@ const interests = [
 ];
 
 interface AboutProps {
-  content: Record<string, string>;
+  content?: Record<string, string>;
 }
 
-const AboutSection = ({ content }: AboutProps) => {
+const AboutSection = ({ content = { about_text: "I am an HR Management undergraduate with a solid foundation in human resources principles. With hands-on experience in administration, teamwork, and communication, I am driven by a passion for creating impactful employee experiences and fostering thriving organizational cultures. I bring a unique blend of academic knowledge and practical exposure to every challenge." } }: AboutProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
