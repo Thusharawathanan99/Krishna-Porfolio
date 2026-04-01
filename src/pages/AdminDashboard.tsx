@@ -86,7 +86,7 @@ const AdminDashboard = () => {
       <div className="sticky top-0 z-50 glass-card border-b border-border">
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <a href="/" className="text-muted-foreground hover:text-primary transition-colors">
+            <a href="#/" className="text-muted-foreground hover:text-primary transition-colors">
               <ArrowLeft size={18} />
             </a>
             <h1 className="text-lg font-heading font-bold text-gradient-gold">Admin Panel</h1>
