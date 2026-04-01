@@ -1,6 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Briefcase } from "lucide-react";
+import { Briefcase, ArrowUpRight } from "lucide-react";
 
 const experiences = [
   {
@@ -8,7 +8,7 @@ const experiences = [
     company: "Glomark, Thalawathugoda",
     period: "2023 – 2024",
     type: "Part-time",
-    tasks: ["Supported e-commerce operations and customer service"],
+    tasks: ["Supported e-commerce operations and customer service", "Assisted with inventory management and order processing"],
   },
   {
     role: "Administrative Assistant (Intern)",
@@ -16,9 +16,9 @@ const experiences = [
     period: "2019 – 2020",
     type: "Internship",
     tasks: [
-      "Assisted with administrative operations",
-      "Supported internal and external communication",
-      "Managed documentation and filing",
+      "Assisted with administrative operations and daily workflows",
+      "Supported internal and external communication channels",
+      "Managed documentation, filing, and data entry",
     ],
   },
 ];
@@ -28,21 +28,27 @@ const ExperienceSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="experience" className="py-24 relative" ref={ref}>
+    <section id="experience" className="section-padding relative" ref={ref}>
       <div className="container mx-auto px-6">
-        <div className="max-w-4xl mx-auto">
-          <motion.h2
+        <div className="max-w-5xl mx-auto">
+          <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
-            className="text-4xl md:text-5xl font-heading font-bold mb-12 line-accent"
+            className="mb-14"
           >
-            Work <span className="text-gradient-gold">Experience</span>
-          </motion.h2>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-alt tracking-[0.2em] uppercase mb-6">
+              <Briefcase size={12} />
+              Experience
+            </div>
+            <h2 className="text-4xl md:text-5xl font-heading font-bold">
+              Work <span className="text-gradient-gold">Experience</span>
+            </h2>
+          </motion.div>
 
           {/* Timeline */}
           <div className="relative">
-            <div className="absolute left-6 top-0 bottom-0 w-px bg-border md:left-8" />
+            <div className="absolute left-[19px] top-0 bottom-0 w-px bg-gradient-to-b from-primary/40 via-primary/20 to-transparent" />
 
             {experiences.map((exp, i) => (
               <motion.div
@@ -50,25 +56,34 @@ const ExperienceSection = () => {
                 initial={{ opacity: 0, x: -40 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.7, delay: 0.2 + i * 0.2 }}
-                className="relative pl-16 md:pl-20 mb-12 last:mb-0"
+                className="relative pl-14 mb-10 last:mb-0"
               >
                 {/* Timeline dot */}
-                <div className="absolute left-4 md:left-6 top-2 w-5 h-5 rounded-full border-2 border-primary bg-background z-10" />
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={isInView ? { scale: 1 } : {}}
+                  transition={{ delay: 0.4 + i * 0.2, type: "spring" }}
+                  className="absolute left-2.5 top-3 w-[14px] h-[14px] rounded-full border-2 border-primary bg-background z-10"
+                >
+                  <div className="absolute inset-1 rounded-full bg-primary" />
+                </motion.div>
 
-                <div className="glass-card rounded-xl p-6 group hover:glow-gold transition-shadow duration-500">
-                  <div className="flex flex-wrap items-center gap-3 mb-3">
-                    <Briefcase size={16} className="text-primary" />
-                    <span className="text-xs px-3 py-1 rounded-full border border-primary/30 text-primary font-body">
+                <div className="glass-card-hover rounded-2xl p-7 group">
+                  <div className="flex flex-wrap items-center gap-3 mb-4">
+                    <span className="text-[10px] px-3 py-1 rounded-full border border-primary/30 text-primary font-alt tracking-wider uppercase">
                       {exp.type}
                     </span>
-                    <span className="text-xs text-muted-foreground font-body ml-auto">{exp.period}</span>
+                    <span className="text-xs text-primary/70 font-alt ml-auto">{exp.period}</span>
                   </div>
-                  <h3 className="text-xl font-heading font-semibold text-foreground mb-1">{exp.role}</h3>
-                  <p className="text-primary/80 text-sm font-body mb-4">{exp.company}</p>
-                  <ul className="space-y-2">
+                  <h3 className="text-xl font-heading font-semibold text-foreground mb-1 flex items-center gap-2">
+                    {exp.role}
+                    <ArrowUpRight size={16} className="text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </h3>
+                  <p className="text-primary/70 text-sm font-alt mb-5">{exp.company}</p>
+                  <ul className="space-y-2.5">
                     {exp.tasks.map((task, j) => (
-                      <li key={j} className="flex items-start gap-2 text-sm text-muted-foreground font-body">
-                        <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-1.5 shrink-0" />
+                      <li key={j} className="flex items-start gap-3 text-sm text-muted-foreground font-body">
+                        <span className="w-1.5 h-1.5 rounded-full bg-primary/50 mt-2 shrink-0" />
                         {task}
                       </li>
                     ))}
