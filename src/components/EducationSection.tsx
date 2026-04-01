@@ -1,8 +1,9 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { GraduationCap, Award, BookOpen } from "lucide-react";
+import type { CertData } from "@/hooks/usePortfolioContent";
 
-const certificates = [
+const defaultCerts: CertData[] = [
   { name: "WhatsApp API", org: "Wati Academy" },
   { name: "Digital Marketing", org: "HubSpot" },
   { name: "Sales Management", org: "HubSpot" },
@@ -11,7 +12,9 @@ const certificates = [
   { name: "Agile Project Management", org: "HP LIFE" },
 ];
 
-const EducationSection = () => {
+interface Props { certs?: CertData[]; }
+
+const EducationSection = ({ certs = defaultCerts }: Props) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -34,7 +37,7 @@ const EducationSection = () => {
             </h2>
           </motion.div>
 
-          {/* Degree card */}
+          {/* Degree */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -48,15 +51,13 @@ const EducationSection = () => {
               </div>
               <div>
                 <div className="text-xs font-alt text-primary tracking-wider uppercase mb-2">2022 – 2026</div>
-                <h3 className="text-xl font-heading font-semibold text-foreground">
-                  BSc in Human Resources Management
-                </h3>
+                <h3 className="text-xl font-heading font-semibold text-foreground">BSc in Human Resources Management</h3>
                 <p className="text-muted-foreground font-body text-sm mt-2">Horizon Campus, Malabe</p>
               </div>
             </div>
           </motion.div>
 
-          {/* School education */}
+          {/* School */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -65,9 +66,7 @@ const EducationSection = () => {
           >
             <div className="space-y-4">
               <div className="flex justify-between items-center">
-                <div>
-                  <span className="text-foreground font-alt text-sm font-medium">A/L (Arts Stream)</span>
-                </div>
+                <span className="text-foreground font-alt text-sm font-medium">A/L (Arts Stream)</span>
                 <span className="text-xs text-primary font-alt tracking-wider">2019</span>
               </div>
               <div className="h-px bg-border" />
@@ -79,20 +78,15 @@ const EducationSection = () => {
           </motion.div>
 
           {/* Certificates */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.4 }}
-            className="flex items-center gap-3 mb-8"
-          >
+          <motion.div initial={{ opacity: 0 }} animate={isInView ? { opacity: 1 } : {}} transition={{ delay: 0.4 }} className="flex items-center gap-3 mb-8">
             <Award size={20} className="text-primary" />
             <h3 className="text-2xl font-heading font-semibold text-foreground">Professional Certifications</h3>
           </motion.div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {certificates.map((cert, i) => (
+            {certs.map((cert, i) => (
               <motion.div
-                key={cert.name}
+                key={cert.name + i}
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.4, delay: 0.5 + i * 0.08 }}

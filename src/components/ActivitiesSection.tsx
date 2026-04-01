@@ -1,12 +1,17 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Trophy, Star, Shield, Heart, Award, Activity } from "lucide-react";
+import { Trophy, Star, Shield, Heart, Activity } from "lucide-react";
+import type { LeadershipData } from "@/hooks/usePortfolioContent";
 
-const leadership = [
-  { title: "Volleyball Player", desc: "National & School level", icon: Trophy },
-  { title: "Team Leader", desc: "Volleyball Team Captain", icon: Star },
-  { title: "Director", desc: "Rotaract Club", icon: Shield },
-  { title: "Member", desc: "Leo Club & Sports Council", icon: Heart },
+const iconMap: Record<string, typeof Trophy> = {
+  "Volleyball Player": Trophy, "Team Leader": Star, "Director": Shield, "Member": Heart,
+};
+
+const defaultLeadership: LeadershipData[] = [
+  { title: "Volleyball Player", desc: "National & School level" },
+  { title: "Team Leader", desc: "Volleyball Team Captain" },
+  { title: "Director", desc: "Rotaract Club" },
+  { title: "Member", desc: "Leo Club & Sports Council" },
 ];
 
 const volunteering = [
@@ -22,7 +27,9 @@ const achievements = [
   "School Prefect (2015–2016)",
 ];
 
-const ActivitiesSection = () => {
+interface Props { leadership?: LeadershipData[]; }
+
+const ActivitiesSection = ({ leadership = defaultLeadership }: Props) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -45,74 +52,53 @@ const ActivitiesSection = () => {
             </h2>
           </motion.div>
 
-          {/* Leadership cards */}
           <div className="grid sm:grid-cols-2 gap-4 mb-16">
-            {leadership.map((item, i) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.12 * i }}
-                className="glass-card-hover rounded-2xl p-6 flex items-start gap-4 cursor-default group"
-              >
-                <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-all duration-300">
-                  <item.icon size={20} className="text-primary" />
-                </div>
-                <div>
-                  <h3 className="font-alt text-sm font-semibold text-foreground group-hover:text-primary transition-colors">{item.title}</h3>
-                  <p className="text-xs text-muted-foreground font-body mt-1">{item.desc}</p>
-                </div>
-              </motion.div>
-            ))}
+            {leadership.map((item, i) => {
+              const Icon = iconMap[item.title] || Star;
+              return (
+                <motion.div
+                  key={item.title + i}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.12 * i }}
+                  className="glass-card-hover rounded-2xl p-6 flex items-start gap-4 cursor-default group"
+                >
+                  <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-all duration-300">
+                    <Icon size={20} className="text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-alt text-sm font-semibold text-foreground group-hover:text-primary transition-colors">{item.title}</h3>
+                    <p className="text-xs text-muted-foreground font-body mt-1">{item.desc}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
 
-          {/* Volunteering & Achievements */}
           <div className="grid md:grid-cols-2 gap-10">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.5 }}
-            >
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay: 0.5 }}>
               <h3 className="text-xl font-heading font-semibold mb-6 text-foreground flex items-center gap-2">
-                <div className="w-1 h-6 rounded-full bg-primary" />
-                Volunteering
+                <div className="w-1 h-6 rounded-full bg-primary" /> Volunteering
               </h3>
               <div className="space-y-3">
                 {volunteering.map((v, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ delay: 0.6 + i * 0.08 }}
-                    className="flex items-center gap-3 text-sm text-muted-foreground font-body py-2 px-3 rounded-lg hover:bg-secondary/30 transition-colors"
-                  >
-                    <div className="w-2 h-2 rounded-full bg-primary shrink-0" />
-                    {v}
+                  <motion.div key={i} initial={{ opacity: 0, x: -20 }} animate={isInView ? { opacity: 1, x: 0 } : {}} transition={{ delay: 0.6 + i * 0.08 }}
+                    className="flex items-center gap-3 text-sm text-muted-foreground font-body py-2 px-3 rounded-lg hover:bg-secondary/30 transition-colors">
+                    <div className="w-2 h-2 rounded-full bg-primary shrink-0" /> {v}
                   </motion.div>
                 ))}
               </div>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.6 }}
-            >
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay: 0.6 }}>
               <h3 className="text-xl font-heading font-semibold mb-6 text-foreground flex items-center gap-2">
-                <div className="w-1 h-6 rounded-full bg-primary" />
-                Achievements
+                <div className="w-1 h-6 rounded-full bg-primary" /> Achievements
               </h3>
               <div className="space-y-3">
                 {achievements.map((a, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ delay: 0.7 + i * 0.08 }}
-                    className="flex items-center gap-3 text-sm text-muted-foreground font-body py-2 px-3 rounded-lg hover:bg-secondary/30 transition-colors"
-                  >
-                    <Trophy size={14} className="text-primary shrink-0" />
-                    {a}
+                  <motion.div key={i} initial={{ opacity: 0, x: -20 }} animate={isInView ? { opacity: 1, x: 0 } : {}} transition={{ delay: 0.7 + i * 0.08 }}
+                    className="flex items-center gap-3 text-sm text-muted-foreground font-body py-2 px-3 rounded-lg hover:bg-secondary/30 transition-colors">
+                    <Trophy size={14} className="text-primary shrink-0" /> {a}
                   </motion.div>
                 ))}
               </div>
