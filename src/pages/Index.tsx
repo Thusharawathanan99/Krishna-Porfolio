@@ -9,17 +9,17 @@ import ContactSection from "@/components/ContactSection";
 import { usePortfolioContent } from "@/hooks/usePortfolioContent";
 
 const Index = () => {
-  const { content, loading } = usePortfolioContent();
+  const { content, skills, experience, certs, leadership } = usePortfolioContent();
 
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
       <HeroSection content={content} />
       <AboutSection content={content} />
-      <EducationSection />
-      <ExperienceSection />
-      <SkillsSection />
-      <ActivitiesSection />
+      <EducationSection certs={certs} />
+      <ExperienceSection experience={experience} />
+      <SkillsSection skills={skills} />
+      <ActivitiesSection leadership={leadership} />
       <ContactSection content={content} />
     </div>
   );
