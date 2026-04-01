@@ -71,7 +71,7 @@ const AdminLogin = () => {
         </form>
 
         <div className="text-center mt-6">
-          <a href="#/" className="text-xs text-muted-foreground hover:text-primary font-alt transition-colors">
+          <a href="/" className="text-xs text-muted-foreground hover:text-primary font-alt transition-colors">
             ← Back to Portfolio
           </a>
         </div>
